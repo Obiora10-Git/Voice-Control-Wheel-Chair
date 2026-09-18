@@ -149,6 +149,7 @@ if (!SpeechRecognition) {
         recognition.start();
 
         statusText.textContent = "Status: Listening...";
+        voiceErrorMessageText.textContent = "🙂"
 
     } catch (e) {
         isListening = false;
@@ -289,7 +290,7 @@ recognition.onresult = (event) => {
 
     recognition.onerror = (event) => { 
         statusText.textContent = `Error occurred: ${event.error}`; 
-        voiceErrorMessageText.textContent = `Error occurred: ${event.error}`; 
+        voiceErrorMessageText.textContent = `😢`; 
     }; 
 
     function triggerPhraseAction(phrase) { 
