@@ -3,18 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/global.css">
-    <link rel="stylesheet" href="/css/responsive.css">
-    <link rel="stylesheet" href="/css/VCWC.css">
+    <link rel="stylesheet" href="/src/global.css">
+    <link rel="stylesheet" href="/src/responsive.css">
+    <link rel="stylesheet" href="/src/VCWC.css">
     <title>Voice-controlled Wheel Chair</title>
 </head>
 <body>
     <div id="splash_screen"class="VCMC-intro">
         <div class="VCMC_bg VCMC_bg_size"></div>
     </div>
-    <div id="app_content" class="app-content hidden">
-        <main>
-        <section class="specials_section">
+     <section class="specials_section hidden">
             <div class="specials">
                 <div class="special_btn_box">
                     <button id="info_btn">
@@ -44,6 +42,8 @@
                 </div>
             </div>
         </section>
+    <div id="app_content" class="app-content hidden">
+        <main>
         <section class="mic_section">
             <div class="mic_control">
                 <div class="mic_container mic_container_size">
@@ -76,8 +76,20 @@
                         </div>
                     </button>
                 </div>
-                <div class="info_message_box">
+                <div id="info_message_box" class="info_message_box">
                     <div id="info_message" class="info_message">
+                        <div class="message_box_contr">
+                            <div class="message_label text_bold">Error</div>
+                             <div id="esp32_message" class="message_box text_bold">
+                            ...
+                             </div>
+                        </div>
+                        <div class="message_box_contr">
+                            <div class="message_label text_bold">Error</div>
+                             <div id="bluetooth_message" class="message_box text_bold">
+                            ...
+                             </div>
+                        </div>
                         <div class="message_box_contr">
                             <div class="message_label text_bold">Error</div>
                              <div id="error_message" class="message_box text_bold">
@@ -109,5 +121,7 @@
     </main>
     </div>
     <script src="/index.js"></script>
+    <script src="/speech.js"></script>
+    <script src="/UI.js"></script>
 </body>
 </html>

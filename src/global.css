@@ -53,7 +53,7 @@ body {
     font-family: 'Inter';
     font-size: 1.25rem;
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh ;
     z-index: -10;
     overflow: hidden;
     animation: bg_drag 0.15s ease forwards ;
@@ -61,25 +61,21 @@ body {
 
 main{
     width: 100%;
-    height: 100vh;
-    display: grid;
-    grid-template-columns: 1fr;
+    height: auto;
+    display: flex;
     justify-content: center;
-    align-items: center;
+    align-content: center;
 }
 
 section{
     border: none;
-  
     height: auto;
     width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .mic_section{
-    padding-top: 7.5rem;
+    padding: 1rem;
+    height: 80vh;
 }
 
 .bg_palette{
@@ -175,11 +171,15 @@ section{
   opacity: 1;
   transform: translateY(0);
   transition: opacity 1s ease 0.2s, transform 0.5s ease 0.3s; /* Delayed to match splash exit */
-  position: fixed;
-  top: 0;
+  position: absolute;
+  top: 10%;
   left: 0;
-  height: 100vh;
+  height: auto;
   width: 100%;
+  padding: 1.5rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   
 }
 
@@ -221,26 +221,32 @@ section{
   }
 }
 
+.info_message_box{
+  display: none;
+}
+
 .info_message_box.active_info{
   background-color: var(--bg-color);
-      height: 100vh;
-    width: 100vw;
+      height: 100%;
+    width: 100%;
     position: absolute;
     top: 0;
-    left: 50;
+    left: 0;
     z-index: 100;
+    display: block;
 }
 
 .info_message{
   opacity: 0;
+  display: none;
 }
 
 .info_message.active_info{
-    height: 100vh;
-    width: 100vw;
+    height: 100%;
+    width: 100%;
     position: absolute;
     top: 0;
-    left: 50;
+    left: 0;
     z-index: 200;
     display: flex;
     flex-direction: column;
@@ -249,7 +255,6 @@ section{
     text-align: justify;
     gap: 1rem;
     background-color: var(--mic-container);
-    padding: 1.5rem;
     opacity: 1;
 
 }
