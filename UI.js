@@ -7,7 +7,7 @@ const currentTheme = localStorage.getItem('theme');
 
  const splash = document.getElementById('splash_screen');
 const appContent = document.getElementById('app_content');
-const specialBtnContent = document.getElementById('')
+const specialBtnContent = document.getElementById('specials_section')
 
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -69,5 +69,6 @@ function bgSwitch() {
 function checkInfo(){
   infoMessageBox.classList.toggle('active_info');
   infoMessage.classList.toggle('active_info');
+  specialBtnContent.classList.toggle('active_info');
   
 }
