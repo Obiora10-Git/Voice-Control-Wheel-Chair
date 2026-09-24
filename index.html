@@ -12,7 +12,10 @@
     <div id="splash_screen"class="VCMC-intro">
         <div class="VCMC_bg VCMC_bg_size"></div>
     </div>
-     <section id="specials_section" class="specials_section hidden">
+     
+    <div id="app_content" class="app-content hidden">
+        <main>
+        <div id="specials_section" class="specials_section hidden">
             <div class="specials">
                 <div class="special_btn_box">
                     <button id="info_btn">
@@ -41,10 +44,8 @@
                     </button>
                 </div>
             </div>
-        </section>
-    <div id="app_content" class="app-content hidden">
-        <main>
-        <section class="mic_section">
+        </div>    
+        <div class="mic_section">
             <div class="mic_control">
                 <div class="mic_container mic_container_size">
                     <div class="mic_off_box">
@@ -91,16 +92,16 @@
                              </div>
                         </div>
                         <div class="message_box_contr">
-                            <div class="message_label text_bold">Error</div>
-                             <div id="error_message" class="message_box text_bold">
-                            ...
-                             </div>
-                        </div>
-                        <div class="message_box_contr">
                             <div class="message_label text_bold">Commands</div>
                             <div id="hidden_commands" class="message_box text_bold">
                             ...
                             </div>
+                        </div>
+                        <div class="message_box_contr">
+                            <div class="message_label text_bold">Mic Error</div>
+                             <div id="error_message" class="message_box text_bold">
+                            ...
+                             </div>
                         </div>
                         <div class="message_box_contr">
                             <div class="message_label text_bold">Status</div>
@@ -117,7 +118,7 @@
                         
                     </div>
                 </div>
-        </section>
+            </div>
     </main>
     </div>
     <script src="/index.js"></script>

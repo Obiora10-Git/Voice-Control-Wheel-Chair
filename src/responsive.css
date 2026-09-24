@@ -42,4 +42,9 @@
     .mic_section{
         height: 80vw;
     }
+    .info_message_box.active_info{
+        top: 0;
+        height: 100%;
+        position: fixed;
+    }
 }

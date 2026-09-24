@@ -60,11 +60,12 @@ body {
 }
 
 main{
-    width: 100%;
+    width: 100vw;
     height: auto;
     display: flex;
     justify-content: center;
     align-content: center;
+    flex-direction: column;
 }
 
 section{
@@ -172,11 +173,11 @@ section{
   transform: translateY(0);
   transition: opacity 1s ease 0.2s, transform 0.5s ease 0.3s; /* Delayed to match splash exit */
   position: absolute;
-  top: 10%;
+  top: 0;
   left: 0;
   height: auto;
-  width: 100%;
-  padding: 1.5rem 0;
+  width: 100vw;
+  padding: 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -227,9 +228,9 @@ section{
 
 .info_message_box.active_info{
   background-color: var(--bg-color);
-      height:90vh;
+    height:100vh;
     width: 100%;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     z-index: 100;
@@ -245,7 +246,7 @@ section{
     height: 100%;
     width: 100%;
     position: absolute;
-    bottom: 0;
+    top: 0;
     left: 0;
     z-index: 200;
     display: flex;
