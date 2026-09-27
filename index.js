@@ -48,3 +48,9 @@ async function sendCommand(value) {
     }
 }
 
+function onThemeChange(newTheme) {
+  // newTheme would be 'light' or 'dark'
+  if (window.ReactNativeWebView) {
+    window.ReactNativeWebView.postMessage(JSON.stringify({ action: 'THEME_CHANGED', value: newTheme }));
+  }
+}
