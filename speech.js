@@ -18,7 +18,7 @@ if (!SpeechRecognition) {
     recognition.maxAlternatives = 1; 
 
     // Target phrases to recognize 
-    const targetPhrases = ["open settings", "background", "forward", "backward", "left", "right", "stop"]; 
+    const targetPhrases = ["tooth", "theme", "forward", "backward", "left", "right", "stop", "anti clockwise", "clockwise"]; 
 
     function getSimilarity(str1, str2) {
   const track = Array(str2.length + 1).fill(null).map(() => Array(str1.length + 1).fill(null));
@@ -192,25 +192,62 @@ recognition.onresult = (event) => {
     if (statusText.textContent === "Status: Listening...") {
         statusText.textContent = "Status: Stopped listening.";
     }
+
 };
 
     recognition.onerror = (event) => { 
         statusText.textContent = `Error occurred: ${event.error}`; 
-        voiceErrorMessageText.textContent = `😢`; 
+        voiceErrorMessageText.textContent = `😢`;
+        sendCommand("S"); 
     }; 
 
     function triggerPhraseAction(phrase) { 
         statusText.textContent = `Success! Action triggered for: "${phrase}"`; 
         switch (phrase) { 
-            case "open settings": 
+            case "tooth": 
                 console.log("Opening settings modal..."); 
                 outputText.textContent = "Open Settings";
                 connectBluetooth() 
                 break; 
-            case "background": 
+            case "theme": 
                 bgSwitch()
                 outputText.textContent = "Dark Theme"; 
                 break; 
+            case "forward":
+                outputText.textContent = "Forward";
+                sendCommand("F");
+                break;
+
+            case "backward":
+                outputText.textContent = "Backward";
+                sendCommand("B");
+                break;
+
+            case "left":
+                outputText.textContent = "Left";
+                sendCommand("L");
+                break;
+
+            case "right":
+                outputText.textContent = "Right";
+                sendCommand("R");
+                break;
+
+            case "stop":
+                outputText.textContent = "Stop";
+                sendCommand("S");
+                break;
+
+            case "anticlockwise":
+                outputText.textContent = "Anti-clockwise";
+                sendCommand("A");
+                break;
+
+            case "clockwise":
+                outputText.textContent = "Clockwise";
+                sendCommand("C");
+                break;
+
             default:
                 console.log("No action assigned to this phrase.");
                 break; 
