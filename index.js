@@ -8,6 +8,7 @@ let esp32Characteristic = null;
 let bleDevice = null;
 let bleServer = null;
 
+document.getElementById('bluetooth-btn').addEventListener('click', connectBluetooth);
 
 //Gotten from the Internet(A.I)
 // Function triggered by a button click on your website
