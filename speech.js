@@ -10,6 +10,9 @@ const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecogni
 
 if (!SpeechRecognition) { 
     speechErrorMessageText.textContent = "Speech recognition not supported in this browser."; 
+     if (micOn) {
+        micOn.disabled = true;
+    }
 } else { 
     const recognition = new SpeechRecognition(); 
     recognition.lang = 'en-US'; 
@@ -18,7 +21,7 @@ if (!SpeechRecognition) {
     recognition.maxAlternatives = 1; 
 
     // Target phrases to recognize 
-    const targetPhrases = ["tooth", "theme", "forward", "backward", "left", "right", "stop", "anti clockwise", "clockwise"]; 
+    const targetPhrases = ["tooth", "theme", "forward", "backward", "left", "right", "stop", "anticlockwise", "clockwise"]; 
 
     function getSimilarity(str1, str2) {
   const track = Array(str2.length + 1).fill(null).map(() => Array(str1.length + 1).fill(null));
@@ -44,9 +47,9 @@ if (!SpeechRecognition) {
 
     micOn.addEventListener('click', () => {
 
-    if (isListening) {
-        return;
-    }
+     if (isListening || !recognition) {
+                return;
+            }
 
     try {
         isListening = true;
@@ -60,6 +63,9 @@ if (!SpeechRecognition) {
     } catch (e) {
         isListening = false;
         recognition.abort();
+        stopDrive();
+
+        statusText.textContent ="Could not start speech recognition.";
     
     }
 });
@@ -81,6 +87,8 @@ if (!SpeechRecognition) {
 
     document.body.classList.remove('active-speech');
     statusText.textContent = "Status: Not Listening...";
+
+    stopDrive();
 });
 
     let isProcessingCommand = false;
@@ -198,61 +206,71 @@ recognition.onresult = (event) => {
     recognition.onerror = (event) => { 
         statusText.textContent = `Error occurred: ${event.error}`; 
         voiceErrorMessageText.textContent = `😢`;
-        sendCommand("S"); 
-    }; 
+        stopDrive(); 
+    };
+    
+const MOVEMENT_COMMANDS = new Set(["F", "B", "L", "R"]);
 
-    function triggerPhraseAction(phrase) { 
-        statusText.textContent = `Success! Action triggered for: "${phrase}"`; 
-        switch (phrase) { 
-            case "tooth": 
-                console.log("Opening settings modal..."); 
-                outputText.textContent = "Open Settings";
-                connectBluetooth() 
-                break; 
-            case "theme": 
-                bgSwitch()
-                outputText.textContent = "Dark Theme"; 
-                break; 
-            case "forward":
-                outputText.textContent = "Forward";
-                sendCommand("F");
-                break;
+let currentDriveCommand = "S";
+let driveKeepAliveTimer = null;
 
-            case "backward":
-                outputText.textContent = "Backward";
-                sendCommand("B");
-                break;
+// Prevent overlapping BLE writes.
+// Commands are processed in order.
+let commandWriteQueue = Promise.resolve();
 
-            case "left":
-                outputText.textContent = "Left";
-                sendCommand("L");
-                break;
 
-            case "right":
-                outputText.textContent = "Right";
-                sendCommand("R");
-                break;
+function clearDriveKeepAlive() {
+    if (driveKeepAliveTimer !== null) {
+        clearInterval(driveKeepAliveTimer);
+        driveKeepAliveTimer = null;
+    }
+}
 
-            case "stop":
-                outputText.textContent = "Stop";
-                sendCommand("S");
-                break;
+    function triggerPhraseAction(phrase) {
+    statusText.textContent =
+        `Success! Action triggered for: "${phrase}"`;
 
-            case "anticlockwise":
-                outputText.textContent = "Anti-clockwise";
-                sendCommand("A");
-                break;
+    switch (phrase) {
+        case "forward":
+            outputText.textContent = "Forward";
+            startDrive("F");
+            break;
 
-            case "clockwise":
-                outputText.textContent = "Clockwise";
-                sendCommand("C");
-                break;
+        case "backward":
+            outputText.textContent = "Backward";
+            startDrive("B");
+            break;
 
-            default:
-                console.log("No action assigned to this phrase.");
-                break; 
-        } 
-    } 
+        case "left":
+            outputText.textContent = "Left";
+            startDrive("L");
+            break;
+
+        case "right":
+            outputText.textContent = "Right";
+            startDrive("R");
+            break;
+
+        case "stop":
+            outputText.textContent = "Stop";
+            stopDrive();
+            break;
+
+        case "anti clockwise":
+            outputText.textContent = "Anti-clockwise";
+            startDrive("L");
+            break;
+
+        case "clockwise":
+            outputText.textContent = "Clockwise";
+            startDrive("R");
+            break;
+
+        default:
+            console.log("No action assigned to this phrase.");
+            break;
+    }
+}
 
     // FIX #2: Moved inside the else wrapper so it has access to `recognition` and `targetPhrases`
     const SpeechGrammarList = window.SpeechGrammarList || window.webkitSpeechGrammarList; 

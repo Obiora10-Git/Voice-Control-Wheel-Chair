@@ -271,9 +271,9 @@ section{
   background-color: none;
   border-color: none;
   border-radius: 0.5rem;
-  height: auto;
+  max-height: 4rem;
   width:100%;
-  text-align: center;
+  text-align: justify;
   background-color: var(--bg-color);
   color: var(--black-circle-color);
   display: flex;
