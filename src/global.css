@@ -74,6 +74,10 @@ section{
     width: 100%;
 }
 
+button{
+  cursor: pointer;
+}
+
 .mic_section{
     padding: 1rem;
     height: 80vh;
